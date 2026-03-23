@@ -1,0 +1,27 @@
+name: Pella Auto Renew
+
+on:
+  schedule:
+    # 每天的 UTC 时间 00:15 和 12:15 运行 (对应北京时间 08:15 和 20:15)
+    - cron: '15 0,12 * * *'
+  # 允许手动在 Actions 页面点击运行按钮
+  workflow_dispatch:
+
+jobs:
+  renew:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Node 20 原生支持 fetch
+
+      - name: Run Script
+        env:
+          ACCOUNT: ${{ secrets.ACCOUNT }}
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        run: node index.js
