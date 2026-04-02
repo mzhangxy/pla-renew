@@ -2,7 +2,7 @@ name: Pella Auto Renew
 
 on:
   schedule:
-    - cron: '15 21 * * *'
+    - cron: '15 */12 * * *'
   # 允许手动在 Actions 页面点击运行按钮
   workflow_dispatch:
 
